@@ -1,0 +1,4 @@
+#!/bin/sh
+
+/exec/speedtest --format=json-pretty --progress=no --accept-license --accept-gdpr > /resources/report.json.tmp
+mv -f /resources/report.json.tmp /resources/report.json
