@@ -1,0 +1,4 @@
+#!/bin/sh
+
+/scripts/speedtest --format=json-pretty --progress=no --accept-license --accept-gdpr > /assets/report.json.tmp
+mv -f /assets/report.json.tmp /assets/report.json

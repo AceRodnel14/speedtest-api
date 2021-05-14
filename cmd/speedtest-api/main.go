@@ -69,8 +69,8 @@ func parseJson(path string) (result SpeedtestResult) {
 }
 
 func performSpeedtest() (result SpeedtestResult) {
-	cmd := exec.Command("/bin/sh", "/exec/run")
-	path := "/resources/report.json"
+	cmd := exec.Command("/bin/sh", "/scripts/run")
+	path := "/assets/report.json"
 	// if fileExists(path) {
 	// 	result = parseJson(path)
 	// 	loc, _ := time.LoadLocation("UTC")
