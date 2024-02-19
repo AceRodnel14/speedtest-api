@@ -1,4 +1,10 @@
 #!/bin/sh
 
-/scripts/speedtest --format=json-pretty --progress=no --accept-license --accept-gdpr > /assets/report.json.tmp
+if [[ -z "${TARGET_ID}" ]]; then
+  SERVER_ARG=""
+else
+  SERVER_ARG="-s ${TARGET_ID} "
+fi
+
+/scripts/speedtest --format=json-pretty --progress=no --accept-license --accept-gdpr ${SERVER_ARG}> /assets/report.json.tmp
 mv -f /assets/report.json.tmp /assets/report.json

@@ -1,6 +1,6 @@
 ARG ARCH=
 
-FROM ${ARCH}\/golang:alpine as build
+FROM golang:alpine as build
 
 WORKDIR /src
 
@@ -32,7 +32,7 @@ RUN mkdir -p /src/assets
 
 RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-w -s" -o /out/server ./cmd/speedtest-api/
 
-FROM ${ARCH}\/alpine AS deploy
+FROM alpine AS deploy
 
 COPY --from=build /etc/passwd /etc/passwd
 COPY --from=build /etc/group /etc/group
