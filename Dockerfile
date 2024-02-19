@@ -23,7 +23,7 @@ COPY ./ ./
 RUN export tmp=${ARCH} \
     export ARCH=$(uname -m) && \
     if [ $ARCH == 'armv7l' ]; then export ARCH=arm; fi && \
-    wget -O /src/scripts/speedtest.tgz https://bintray.com/ookla/download/download_file?file_path=ookla-speedtest-1.0.0-${ARCH}-linux.tgz && \
+    wget -O /src/scripts/speedtest.tgz https://install.speedtest.net/app/cli/ookla-speedtest-1.2.0-linux-${ARCH}.tgz && \
     tar zxvf /src/scripts/speedtest.tgz -C /src/scripts && \
     rm -f /src/scripts/speedtest.md /src/scripts/speedtest.5 /src/scripts/speedtest.tgz \
     export ARCH=${tmp}

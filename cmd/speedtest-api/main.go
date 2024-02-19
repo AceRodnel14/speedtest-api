@@ -55,7 +55,7 @@ func main() {
 // 	return output
 // }
 
-func parseJson(path string) (result SpeedtestResult) {
+func parseJson(path string) (result []byte) {
 	jsonFile, err := os.Open(path)
 	if err != nil {
 		fmt.Println("File missing")
@@ -63,6 +63,11 @@ func parseJson(path string) (result SpeedtestResult) {
 	defer jsonFile.Close()
 
 	byteValue, _ := ioutil.ReadAll(jsonFile)
+	return byteValue
+}
+
+func parseJsonToStruct(path string) (result SpeedtestResult) {
+	byteValue := parseJson(path)
 	json.Unmarshal(byteValue, &result)
 
 	return result
@@ -92,7 +97,7 @@ func performSpeedtest() (result SpeedtestResult) {
 
 	// }
 	cmd.Run()
-	result = parseJson(path)
+	result = parseJsonToStruct(path)
 	return result
 }
 
@@ -122,7 +127,13 @@ func speedtestExport(format string) func(w http.ResponseWriter, r *http.Request,
 		}
 		if format == "json" {
 			w.Header().Set("Content-Type", "application/json")
-			json.NewEncoder(w).Encode(list)
+			fileData := parseJson("/assets/report.json")
+			var filePayload interface{}                   //The interface where we will save the converted JSON data.
+			err := json.Unmarshal(fileData, &filePayload) // Convert JSON data into interface{} type
+			if err != nil {
+				log.Fatal(err)
+			}
+			json.NewEncoder(w).Encode(filePayload)
 		}
 	}
 }
