@@ -1,5 +1,4 @@
 ARG ARCH=
-
 FROM golang:alpine as build
 
 WORKDIR /src
@@ -33,6 +32,8 @@ RUN mkdir -p /src/assets
 RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-w -s" -o /out/server ./cmd/speedtest-api/
 
 FROM alpine AS deploy
+
+LABEL org.opencontainers.image.source=https://github.com/AceRodnel14/speedtest-api
 
 COPY --from=build /etc/passwd /etc/passwd
 COPY --from=build /etc/group /etc/group
